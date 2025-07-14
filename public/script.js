@@ -151,6 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const currentTime = document.getElementById('current-time');
   const duration = document.getElementById('duration');
   const volume = document.getElementById('volume');
+  const togglePlayBtn = document.getElementById('toggle-play-btn');
 
   let mediaFiles = [];
   let currentMedia = null;
@@ -195,24 +196,19 @@ document.addEventListener('DOMContentLoaded', () => {
     pauseBtn.style.display = '';
   }
 
-  // Player Controls
-  playBtn.addEventListener('click', () => {
-    if (audioPlayer.src) audioPlayer.play();
-    playBtn.style.display = 'none';
-    pauseBtn.style.display = '';
-  });
-  pauseBtn.addEventListener('click', () => {
-    audioPlayer.pause();
-    playBtn.style.display = '';
-    pauseBtn.style.display = 'none';
+  // Player Controls (nur ein Button)
+  togglePlayBtn.addEventListener('click', () => {
+    if (audioPlayer.paused) {
+      audioPlayer.play();
+    } else {
+      audioPlayer.pause();
+    }
   });
   audioPlayer.addEventListener('play', () => {
-    playBtn.style.display = 'none';
-    pauseBtn.style.display = '';
+    togglePlayBtn.textContent = '⏸️';
   });
   audioPlayer.addEventListener('pause', () => {
-    playBtn.style.display = '';
-    pauseBtn.style.display = 'none';
+    togglePlayBtn.textContent = '▶️';
   });
   audioPlayer.addEventListener('timeupdate', () => {
     progress.value = audioPlayer.currentTime / audioPlayer.duration * 100 || 0;
@@ -236,4 +232,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initialisieren
   loadMediaList();
+
+  // --- Mobile Navigation ---
+  function showSection(section) {
+    document.getElementById('media-list').style.display = section === 'library' ? '' : 'none';
+    document.getElementById('favorites-list').style.display = section === 'favorites' ? '' : 'none';
+    document.getElementById('settings').style.display = section === 'settings' ? '' : 'none';
+  }
+  document.getElementById('mobile-library').addEventListener('click', e => { e.preventDefault(); showSection('library'); });
+  document.getElementById('mobile-favorites').addEventListener('click', e => { e.preventDefault(); showSection('favorites'); });
+  document.getElementById('mobile-settings').addEventListener('click', e => { e.preventDefault(); showSection('settings'); });
+  document.getElementById('mobile-logout').addEventListener('click', e => { e.preventDefault(); clearToken(); updateUIOnLogout(); showLoginModal(); });
+
+  // Passe Sichtbarkeit der mobilen Logout-Navigation an Login-Status an
+  function updateUIOnLogin(username) {
+    userInfo.textContent = `Eingeloggt als ${username}`;
+    navLogout.style.display = '';
+    document.getElementById('mobile-logout').style.display = '';
+  }
+  function updateUIOnLogout() {
+    userInfo.textContent = '';
+    navLogout.style.display = 'none';
+    document.getElementById('mobile-logout').style.display = 'none';
+  }
 }); 
