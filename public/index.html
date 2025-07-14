@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Musicplayer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <nav class="sidebar">
+      <h1>🎵 Musicplayer</h1>
+      <ul>
+        <li><a href="#" id="nav-library">Bibliothek</a></li>
+        <li><a href="#" id="nav-favorites">Favoriten</a></li>
+        <li><a href="#" id="nav-settings">Einstellungen</a></li>
+        <li><a href="#" id="nav-logout" style="display:none">Logout</a></li>
+      </ul>
+    </nav>
+    <main class="main-content">
+      <header>
+        <input type="text" id="search" placeholder="Suche nach Titel, Autor, Genre...">
+        <div id="user-info"></div>
+      </header>
+      <section id="media-list" class="media-list"></section>
+      <section id="favorites-list" class="media-list" style="display:none"></section>
+      <section id="settings" style="display:none">
+        <h2>Einstellungen</h2>
+        <label>
+          Wiedergabegeschwindigkeit:
+          <select id="playback-rate">
+            <option value="1">Normal</option>
+            <option value="1.25">1.25x</option>
+            <option value="1.5">1.5x</option>
+            <option value="2">2x</option>
+          </select>
+        </label>
+      </section>
+    </main>
+    <footer class="player-bar">
+      <audio id="audio-player" controls preload="none"></audio>
+      <div class="player-controls">
+        <button id="prev-btn">⏮️</button>
+        <button id="play-btn">▶️</button>
+        <button id="pause-btn" style="display:none">⏸️</button>
+        <button id="next-btn">⏭️</button>
+        <input type="range" id="progress" value="0" min="0" max="100">
+        <span id="current-time">00:00</span> / <span id="duration">00:00</span>
+        <input type="range" id="volume" min="0" max="1" step="0.01">
+      </div>
+    </footer>
+    <div id="login-modal" class="modal">
+      <form id="login-form">
+        <h2>Login</h2>
+        <input type="text" id="login-username" placeholder="Benutzername" required>
+        <input type="password" id="login-password" placeholder="Passwort" required>
+        <button type="submit">Login</button>
+        <p>Noch kein Konto? <a href="#" id="show-register">Registrieren</a></p>
+        <div id="login-error" class="error"></div>
+      </form>
+      <form id="register-form" style="display:none">
+        <h2>Registrieren</h2>
+        <input type="text" id="register-username" placeholder="Benutzername" required>
+        <input type="password" id="register-password" placeholder="Passwort" required>
+        <button type="submit">Registrieren</button>
+        <p>Schon ein Konto? <a href="#" id="show-login">Login</a></p>
+        <div id="register-error" class="error"></div>
+      </form>
+    </div>
+  </div>
+  <nav id="mobile-nav">
+    <a href="#" id="mobile-library">🏠</a>
+    <a href="#" id="mobile-favorites">⭐</a>
+    <a href="#" id="mobile-settings">⚙️</a>
+    <a href="#" id="mobile-logout" style="display:none">🚪</a>
+  </nav>
+  <script src="script.js"></script>
+</body>
+</html> 
